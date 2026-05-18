@@ -1,0 +1,201 @@
+/* Styling Theme Setup */
+:root {
+    --bg-dark: #090d16;
+    --card-glow: rgba(22, 32, 54, 0.5);
+    --blue-neon: #3b82f6;
+    --purple-neon: #8b5cf6;
+    --text-light: #f8fafc;
+    --text-dark: #94a3b8;
+}
+
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+/* Glassmorphism Navbar */
+.navbar {
+    position: fixed;
+    top: 0; width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 40px;
+    background: rgba(9, 13, 22, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.nav-logo {
+    font-size: 1.6rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--blue-neon), var(--purple-neon));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex; list-style: none; gap: 25px;
+}
+
+.nav-links a {
+    color: var(--text-light); text-decoration: none;
+    font-weight: 500; transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--blue-neon); }
+
+/* Hero Center Profile */
+.hero {
+    height: 100vh;
+    display: flex; justify-content: center; align-items: center; text-align: center;
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, transparent 65%);
+}
+
+.hero-title {
+    font-size: 3.8rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 12px;
+    background: linear-gradient(to right, #ffffff, #cbd5e1);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem; color: var(--text-dark); margin-bottom: 25px;
+}
+
+.typed-text { color: var(--blue-neon); font-weight: 700; }
+
+.cursor {
+    display: inline-block; background-color: var(--blue-neon);
+    width: 3px; animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    50% { background-color: transparent; }
+}
+
+.hero-contact a {
+    color: var(--text-light); font-size: 1.6rem; margin: 0 12px;
+    transition: color 0.3s, transform 0.3s; display: inline-block;
+}
+
+.hero-contact a:hover {
+    color: var(--purple-neon); transform: translateY(-4px);
+}
+
+.cta-btn {
+    display: inline-block; margin-top: 35px;
+    padding: 12px 28px; background: linear-gradient(135deg, var(--blue-neon), var(--purple-neon));
+    color: white; text-decoration: none; border-radius: 25px; font-weight: 600;
+    box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3); transition: 0.3s;
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+}
+
+/* Structural Container */
+.container {
+    max-width: 850px; margin: 0 auto; padding: 0 20px 80px;
+}
+
+/* Premium Glassmorphism Design */
+.glass-card {
+    background: var(--card-glow); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 16px;
+    padding: 35px; margin-bottom: 45px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); transition: border-color 0.3s;
+}
+
+.glass-card:hover { border-color: rgba(59, 130, 246, 0.25); }
+
+.section-title {
+    font-size: 1.6rem; color: var(--blue-neon); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+}
+
+.about-text { font-size: 1.1rem; line-height: 1.7; color: #cbd5e1; }
+
+/* Timeline Configuration */
+.timeline {
+    border-left: 2px solid rgba(255, 255, 255, 0.08); padding-left: 25px; margin-left: 8px;
+}
+
+.timeline-item { position: relative; margin-bottom: 35px; }
+
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-dot {
+    position: absolute; left: -36px; top: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--purple-neon); box-shadow: 0 0 10px var(--purple-neon);
+}
+
+.institution { color: var(--blue-neon); font-weight: 500; margin: 3px 0; }
+
+.meta { font-size: 0.9rem; color: var(--text-dark); }
+
+/* Skills Grid Chips */
+.skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;
+}
+
+.skill-chip {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px; border-radius: 10px; text-align: center;
+    font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 10px;
+    transform-style: preserve-3d; transform: perspective(800px); transition: 0.3s;
+}
+
+.skill-chip i { color: var(--blue-neon); font-size: 1.2rem; }
+
+.skill-chip:hover {
+    background: rgba(59, 130, 246, 0.06); border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Dynamic Project Section Layout */
+.project-card {
+    background: rgba(10, 16, 28, 0.7); border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 12px; padding: 25px; transform-style: preserve-3d; transform: perspective(800px);
+}
+
+.project-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px; margin-bottom: 15px;
+}
+
+.tag {
+    background: rgba(139, 92, 246, 0.15); color: var(--purple-neon);
+    padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;
+}
+
+.project-desc { color: #cbd5e1; margin-bottom: 15px; line-height: 1.6; }
+
+.features-list { list-style: none; margin-bottom: 20px; }
+
+.features-list li { margin-bottom: 6px; font-size: 0.95rem; color: #cbd5e1; }
+
+.features-list i { color: var(--blue-neon); margin-right: 8px; }
+
+.project-btn {
+    display: inline-block; padding: 10px 20px; background: var(--blue-neon);
+    color: white; text-decoration: none; border-radius: 6px; font-weight: 500; transition: 0.3s;
+}
+
+.project-btn:hover { background: #2563eb; }
+
+/* Extracurricular and References Footer */
+.extra-box h3 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
+
+.extra-box p { color: #cbd5e1; line-height: 1.6; }
+
+.reference-section {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+    border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 12px; padding: 25px; text-align: center;
+}
+
+.ref-text { font-style: italic; color: #cbd5e1; line-height: 1.6; }
