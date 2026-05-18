@@ -1,56 +1,37 @@
-document.addEventListener('DOMContentLoaded', function() {
+// 1. Scroll Reveal Logic (ডানদিক থেকে স্লাইড ও টিল্ট হয়ে আসার জন্য)
+const revealElements = document.querySelectorAll('.reveal');
+
+const checkReveal = () => {
+    const triggerBottom = window.innerHeight * 0.85;
     
-    // ১. Initialize AOS (Scroll Animations)
-    AOS.init({
-        duration: 900,
-        once: true,
-        offset: 100
-    });
-
-    // ২. Typing Effect Mechanism (Inspired by Video 1)
-    const terms = ["Computer Science Student.", "Digital Creator.", "Logic Lover."];
-    let wordIndex = 0;
-    let letterIndex = 0;
-    let isDeleting = false;
-    const typeSpeed = 100;
-    const deleteSpeed = 60;
-    const delayBetweenWords = 2000;
-
-    function handleTyping() {
-        const currentWord = terms[wordIndex];
-        const typedTextElement = document.querySelector('.typed-text');
-
-        if (!isDeleting) {
-            typedTextElement.textContent = currentWord.substring(0, letterIndex + 1);
-            letterIndex++;
-
-            if (letterIndex === currentWord.length) {
-                isDeleting = true;
-                setTimeout(handleTyping, delayBetweenWords);
-                return;
-            }
+    revealElements.forEach(el => {
+        const elTop = el.getBoundingClientRect().top;
+        if (elTop < triggerBottom) {
+            el.classList.add('active');
         } else {
-            typedTextElement.textContent = currentWord.substring(0, letterIndex - 1);
-            letterIndex--;
-
-            if (letterIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % terms.length;
-            }
+            el.classList.remove('active'); // স্ক্রোল আপ করলে আবার অ্যানিমেশন হবে
         }
+    });
+};
 
-        setTimeout(handleTyping, isDeleting ? deleteSpeed : typeSpeed);
-    }
+window.addEventListener('scroll', checkReveal);
+window.addEventListener('load', checkReveal); // প্রথমবার পেজ লোডেই রান হবে
 
-    if(document.querySelector('.typed-text')) {
-        handleTyping();
-    }
+// 2. 3D Card Interaction Logic (মাউস মুভমেন্ট ট্র্যাকিং)
+const cards = document.querySelectorAll('.skill-card');
 
-    // ৩. 3D Tilt Effect Configuration (Inspired by Video 2)
-    VanillaTilt.init(document.querySelectorAll(".skill-chip, .project-card"), {
-        max: 10,
-        speed: 300,
-        glare: true,
-        "max-glare": 0.12,
+cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - (rect.width / 2);
+        const y = e.clientY - rect.top - (rect.height / 2);
+        
+        // মাউস অনুযায়ী সামান্য বাঁকানোর ক্যালকুলেশন
+        card.style.transform = `rotateY(${x / 5}deg) rotateX(${-y / 5}deg) translateY(-5px)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        // মাউস সরে গেলে আবার আগের জায়গায় ফিরে আসবে
+        card.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0deg)';
     });
 });
