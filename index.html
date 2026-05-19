@@ -647,10 +647,26 @@
             
             .geometric-shape { width: 280px; height: 280px; margin-bottom: 20px; }
             .wave-wrapper { height: 250px; } /* Scale down wave engine on smaller viewports */
+            /* Interactive Cursor Glow */
+.cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1; 
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
         }
     </style>
 </head>
 <body>
+    <div class="cursor-glow" id="cursorGlow"></div>
 
     <div class="bg-canvas">
     <div class="fluid-aurora-system">
@@ -851,6 +867,15 @@
         }
     };
     window.addEventListener('DOMContentLoaded', optimizeBackgroundPerformance);
+
+    // 4. ADDED: Interactive Cursor Glow System
+    const glow = document.querySelector('.cursor-glow');
+    window.addEventListener('mousemove', (e) => {
+        if (glow) {
+            glow.style.left = `${e.clientX}px`;
+            glow.style.top = `${e.clientY}px`;
+        }
+    });
 </script>
 </body>
 </html>
