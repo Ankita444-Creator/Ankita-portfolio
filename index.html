@@ -7,90 +7,132 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-/* ১. এই রুট ভ্যারিয়েবলটি আপডেট কর (Theme Colors) */
-:root {
-    --bg-primary: #0b0f19; /* আরও একটু ডার্ক বেস */
-    --bg-secondary: rgba(22, 29, 49, 0.4); /* প্রিমিয়াম গ্লাস মরফিজম */
-    --text-main: #f8fafc;  
-    --text-muted: #94a3b8; 
-    --accent: #3b82f6; /* ভাইব্রেন্ট ব্লু */
-    --accent-hover: #60a5fa;
-    --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5);
-    --border-radius: 16px;
-    --card-border: 1px solid rgba(255, 255, 255, 0.05); 
-}
+        :root {
+            --bg-primary: #05070f; /* High-contrast dark midnight base */
+            --bg-secondary: rgba(13, 20, 38, 0.45); /* True glassmorphism tint */
+            --text-main: #f8fafc;  
+            --text-muted: #94a3b8; 
+            --accent: #3b82f6; 
+            --accent-hover: #60a5fa;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            --border-radius: 16px;
+            --card-border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
 
-/* ২. বডির এই ব্যাকগ্রাউন্ডটা রিপ্লেস কর (Smoky Wavy Mesh Gradient) */
-body {
-    background-color: var(--bg-primary);
-    /* মাল্টিপল রেডিয়াল গ্রাডিয়েন্ট দিয়ে ব্লু, অরেঞ্জ, ইয়েলো স্মোকি ইফেক্ট তৈরি */
-    background-image: 
-        radial-gradient(circle at 80% 90%, rgba(249, 115, 22, 0.15) 0%, transparent 40%),  /* Orange Glow (Bottom Right) */
-        radial-gradient(circle at 20% 80%, rgba(234, 179, 8, 0.12) 0%, transparent 45%),   /* Yellow Glow (Bottom Left) */
-        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),  /* Core Blue Smoky Waves */
-        radial-gradient(circle at 10% 20%, rgba(30, 41, 59, 0.8) 0%, #070a12 100%);        /* Dark Base Overlay */
-    background-attachment: fixed;
-    color: var(--text-main);
-    overflow-x: hidden;
-    position: relative;
-}
+        /* Fluid Animated Mesh Background */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
 
-/* ৩. গ্লাস মরফিজম কার্ডগুলোর ব্যাকগ্রাউন্ড আরও সুন্দর করার জন্য (Optional but Recommended) */
-.timeline-container .content, .skill-card, .project-container, .extra-container, .contact-card {
-    background: rgba(18, 24, 38, 0.5) !important;
-    backdrop-filter: blur(16px) saturate(120%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.07) !important;
-}
-        /* ব্যাকগ্রাউন্ড স্মোকি গ্লো-এর জন্য স্পেশাল CSS */
-.smoky-glow {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(90px);
-    z-index: -1; /* যাতে কন্টেন্টের পেছনে থাকে */
-    opacity: 0.45;
-    pointer-events: none;
-    mix-blend-mode: screen;
-}
-.glow-blue {
-    top: 30%;
-    left: 10%;
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, #0070f3 0%, transparent 70%);
-}
-.glow-orange {
-    bottom: 5%;
-    right: 5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #ff7a00 0%, transparent 70%);
-}
-.glow-yellow {
-    bottom: 15%;
-    left: -5%;
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, #ffc700 0%, transparent 70%);
-}
+        /* Background Animated Ambient Mesh Canvas */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: #04060a;
+        }
 
-        /* Navbar with Dark Glassmorphism */
+        /* Giant Dynamic Liquid Smoke Nodes */
+        .smoky-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.65;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .glow-blue {
+            top: -10%;
+            left: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.8) 0%, transparent 70%);
+            animation: liquidStream 25s infinite alternate ease-in-out;
+        }
+
+        .glow-orange {
+            bottom: -10%;
+            right: -5%;
+            width: 750px;
+            height: 750px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.55) 0%, transparent 70%);
+            animation: liquidStream 30s infinite alternate-reverse ease-in-out 2s;
+        }
+
+        .glow-yellow {
+            top: 40%;
+            right: 20%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.45) 0%, transparent 70%);
+            animation: liquidStream 20s infinite alternate ease-in-out 4s;
+        }
+
+        .glow-purple {
+            bottom: 30%;
+            left: 15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, transparent 70%);
+            animation: liquidStream 28s infinite alternate-reverse ease-in-out 1s;
+        }
+
+        /* Fluid Simulation Keyframe */
+        @keyframes liquidStream {
+            0% {
+                transform: translate(0px, 0px) scale(1) rotate(0deg);
+            }
+            33% {
+                transform: translate(100px, -80px) scale(1.2) rotate(120deg);
+            }
+            66% {
+                transform: translate(-60px, 120px) scale(0.9) rotate(240deg);
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1) rotate(360deg);
+            }
+        }
+
+        /* High Precision Glassmorphic Containers */
+        .timeline-container .content, .skill-card, .project-container, .extra-container, .contact-card {
+            background: rgba(10, 15, 30, 0.55) !important;
+            backdrop-filter: blur(20px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.09) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Navbar Styling */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             height: 70px;
-            background: rgba(15, 17, 21, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(5, 7, 15, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
             z-index: 1000;
             border-bottom: var(--card-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
         }
+
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -102,6 +144,8 @@ body {
             display: flex;
             list-style: none;
             gap: 30px;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
@@ -116,13 +160,14 @@ body {
             color: var(--accent);
         }
 
-        /* Universal Section Styling */
+        /* Layout Architecture */
         .section {
             padding: 120px 10% 60px 10%;
             min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .section-title {
@@ -130,15 +175,13 @@ body {
             font-weight: 800;
             margin-bottom: 50px;
             text-align: center;
-            position: relative;
             letter-spacing: -1px;
         }
 
-        /* Scroll-Reveal Dynamic Animation Base */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .reveal.active {
@@ -146,7 +189,7 @@ body {
             transform: translateY(0);
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             display: flex;
             flex-direction: row;
@@ -166,11 +209,12 @@ body {
             font-weight: 800;
             line-height: 1.1;
             letter-spacing: -1.5px;
+            margin: 0;
         }
 
         .highlight {
             color: var(--accent);
-            background: linear-gradient(to right, var(--accent), #00c6ff);
+            background: linear-gradient(to right, #3b82f6, #06b6d4, #f97316);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -199,16 +243,15 @@ body {
             font-weight: 600;
             border-radius: 30px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 14px rgba(0, 112, 243, 0.4);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
         }
 
         .btn:hover {
             background-color: var(--accent-hover);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 112, 243, 0.6);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
         }
 
-        /* Custom Geometric Profile Shape Wrapper */
         .hero-image-container {
             flex: 1;
             display: flex;
@@ -219,13 +262,13 @@ body {
         .geometric-shape {
             width: 350px;
             height: 350px;
-            background: #0070f3;
+            background: #1d4ed8;
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             box-shadow: var(--shadow);
             overflow: hidden;
             position: relative;
             animation: morphing 8s ease-in-out infinite alternate;
-            border: 6px solid #ffffff;
+            border: 4px solid rgba(255, 255, 255, 0.2);
         }
 
         .profile-pic {
@@ -239,7 +282,7 @@ body {
             100% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
         }
 
-        /* Education Flowchart Timeline */
+        /* Timeline Educational Layout */
         .timeline {
             position: relative;
             max-width: 800px;
@@ -251,7 +294,7 @@ body {
             content: '';
             position: absolute;
             width: 4px;
-            background-color: rgba(0, 112, 243, 0.2);
+            background-color: rgba(59, 130, 246, 0.2);
             top: 0;
             bottom: 0;
             left: 50%;
@@ -264,34 +307,31 @@ body {
             position: relative;
             background-color: inherit;
             width: 50%;
+            box-sizing: border-box;
         }
 
         .timeline-container::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -10px;
-            background-color: #fff;
+            width: 16px;
+            height: 16px;
+            right: -8px;
+            background-color: #05070f;
             border: 4px solid var(--accent);
-            top: 22px;
+            top: 24px;
             border-radius: 50%;
             z-index: 1;
-            box-shadow: 0 0 0 4px rgba(0, 112, 243, 0.1);
+            box-shadow: 0 0 10px var(--accent);
         }
 
         .left { left: 0; }
         .right { left: 50%; }
-        .right::after { left: -10px; }
+        .right::after { left: -8px; }
 
         .timeline-container .content {
             padding: 30px;
-            background-color: var(--bg-secondary);
-            position: relative;
             border-radius: var(--border-radius);
-            border: var(--card-border); /* এটি যুক্ত হলো */
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
+            position: relative;
             transition: transform 0.3s ease;
         }
         
@@ -309,7 +349,7 @@ body {
             letter-spacing: 1px;
         }
 
-        /* 3D Skills Cards */
+        /* Skills Component */
         .skills-grid {
             display: flex;
             justify-content: center;
@@ -318,48 +358,35 @@ body {
         }
 
         .skill-card {
-            background: var(--bg-secondary);
             padding: 40px 30px;
             border-radius: var(--border-radius);
-            border: var(--card-border); /* গ্লাস বর্ডার */
-            box-shadow: var(--shadow);
             width: 200px;
             text-align: center;
-            backdrop-filter: blur(8px);
             transition: transform 0.1s ease, box-shadow 0.3s ease;
             transform-style: preserve-3d;
             perspective: 1000px;
             cursor: pointer;
         }
 
-        .skill-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        }
-
         .skill-icon {
             font-size: 4rem;
             margin-bottom: 20px;
-            transition: transform 0.3s;
         }
 
-        .python-color { color: #3776AB; }
-        .c-color { color: #00599C; }
-        .canva-color { color: #00C4CC; }
+        .python-color { color: #3776AB; filter: drop-shadow(0 0 8px rgba(55,118,171,0.4)); }
+        .c-color { color: #00599C; filter: drop-shadow(0 0 8px rgba(0,89,156,0.4)); }
+        .canva-color { color: #00C4CC; filter: drop-shadow(0 0 8px rgba(0,196,204,0.4)); }
 
-        /* Interactive Project Layout */
+        /* Showcase Portals (Projects & Extras) */
         .project-container, .extra-container {
-            background: var(--bg-secondary);
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
             display: flex;
             flex-direction: row;
             overflow: hidden;
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 0 auto 40px auto;
             width: 100%;
             transition: transform 0.3s ease;
-            border: var(--card-border);
-            backdrop-filter: blur(8px);
         }
         
         .project-container:hover, .extra-container:hover {
@@ -368,8 +395,6 @@ body {
 
         .extra-container {
             flex-direction: row-reverse;
-            border: var(--card-border);
-            backdrop-filter: blur(8px);
         }
 
         .project-info, .extra-info {
@@ -382,14 +407,15 @@ body {
         }
 
         .badge {
-            background: rgba(0, 112, 243, 0.1);
-            color: var(--accent);
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
             margin: 10px 0 20px 0;
             letter-spacing: 0.5px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
         .project-info p, .extra-info p {
@@ -403,7 +429,7 @@ body {
             flex: 1;
             overflow: hidden;
             position: relative;
-            background: #000;
+            background: #020408;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -418,7 +444,7 @@ body {
         }
 
         .extra-container:hover .proof-img {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         .views-badge {
@@ -430,11 +456,12 @@ body {
             padding: 10px 20px;
             border-radius: 30px;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 0, 80, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 0, 80, 0.5);
             animation: pulse 2s infinite;
             display: flex;
             align-items: center;
             gap: 8px;
+            z-index: 2;
         }
 
         @keyframes pulse {
@@ -454,29 +481,26 @@ body {
             font-weight: 600;
             border-radius: 30px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
         }
 
         .instagram-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.6);
         }
 
-        /* Contact Section */
+        /* Communications Hub */
         .contact-card {
-            background: var(--bg-secondary);
             padding: 50px;
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             width: 100%;
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 30px;
-            border: var(--card-border);
-            backdrop-filter: blur(8px);
+            box-sizing: border-box;
         }
 
         .contact-item {
@@ -484,54 +508,55 @@ body {
             padding: 20px;
             border-radius: 12px;
             transition: background 0.3s ease;
+            text-decoration: none;
+            min-width: 150px;
         }
         
-       .contact-item:hover {
-            background: rgba(255, 255, 255, 0.05);
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .contact-item i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--accent);
             margin-bottom: 15px;
         }
 
-        .contact-item p {
-            font-size: 0.95rem;
+        .contact-text p {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 5px;
+            margin: 0 0 5px 0;
             font-weight: 600;
         }
 
-        .contact-item a {
+        .contact-text span {
             color: var(--text-main);
-            text-decoration: none;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: color 0.3s;
+            word-break: break-all;
         }
 
-        .contact-item a:hover {
-            color: var(--accent);
+        .contact-item:hover .contact-text span {
+            color: var(--accent-hover);
         }
 
-        /* Official Footer */
         .footer {
-            background: #111111;
+            background: #03050a;
             color: #ffffff;
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
             margin-top: 100px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer p {
-            font-size: 0.95rem;
-            opacity: 0.7;
-            margin: 8px 0;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin: 6px 0;
         }
 
-        /* Mobile Responsiveness */
+        /* Fluid Adaptation Systems (Responsive Viewports) */
         @media (max-width: 900px) {
             .hero, .project-container, .extra-container {
                 flex-direction: column;
@@ -559,18 +584,17 @@ body {
             .description { margin: 0 auto 30px auto; }
             
             .geometric-shape { width: 280px; height: 280px; margin-bottom: 20px; }
-            
-            .contact-card {
-                flex-direction: column;
-                align-items: center;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="smoky-glow glow-blue"></div>
-<div class="smoky-glow glow-orange"></div>
-<div class="smoky-glow glow-yellow"></div>
+
+    <div class="bg-canvas">
+        <div class="smoky-glow glow-blue"></div>
+        <div class="smoky-glow glow-orange"></div>
+        <div class="smoky-glow glow-yellow"></div>
+        <div class="smoky-glow glow-purple"></div>
+    </div>
 
     <nav class="navbar">
         <div class="logo">Ankita Nandi</div>
@@ -677,7 +701,7 @@ body {
         <h2 class="section-title">Contact Details</h2>
         <div class="contact-card">
             <a href="mailto:nandiankita34@gmail.com" class="contact-item">
-                <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
+                <i class="fas fa-envelope"></i>
                 <div class="contact-text">
                     <p>Email Me</p>
                     <span>nandiankita34@gmail.com</span>
@@ -685,7 +709,7 @@ body {
             </a>
             
             <a href="tel:+91XXXXXXXXXX" class="contact-item">
-                <div class="icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                <i class="fas fa-phone-alt"></i>
                 <div class="contact-text">
                     <p>Call Me</p>
                     <span>+91 XXXXXXXXXX</span>
@@ -693,18 +717,18 @@ body {
             </a>
 
             <a href="#" target="_blank" class="contact-item">
-                <div class="icon-wrapper"><i class="fab fa-linkedin-in"></i></div>
+                <i class="fab fa-linkedin-in"></i>
                 <div class="contact-text">
                     <p>LinkedIn</p>
-                    <span>Connect with me</span>
+                    <span>Connect</span>
                 </div>
             </a>
 
             <a href="#" target="_blank" class="contact-item">
-                <div class="icon-wrapper"><i class="fab fa-github"></i></div>
+                <i class="fab fa-github"></i>
                 <div class="contact-text">
                     <p>GitHub</p>
-                    <span>View my projects</span>
+                    <span>View Projects</span>
                 </div>
             </a>
         </div>
@@ -718,12 +742,10 @@ body {
     </footer>
 
     <script>
-        // 1. Better Scroll Reveal Logic (Fade up gracefully)
+        // Smooth Scroll Reveal Logic
         const revealElements = document.querySelectorAll('.reveal');
-
         const checkReveal = () => {
             const triggerBottom = window.innerHeight * 0.90;
-            
             revealElements.forEach(el => {
                 const elTop = el.getBoundingClientRect().top;
                 if (elTop < triggerBottom) {
@@ -731,23 +753,18 @@ body {
                 }
             });
         };
-
         window.addEventListener('scroll', checkReveal);
         window.addEventListener('load', checkReveal); 
 
-        // 2. 3D Card Interaction Logic - Smoothed out
+        // 3D Interactive Card Movement Engine
         const cards = document.querySelectorAll('.skill-card');
-
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left - (rect.width / 2);
                 const y = e.clientY - rect.top - (rect.height / 2);
-                
-                // Smoother calculation
                 card.style.transform = `rotateY(${x / 8}deg) rotateX(${-y / 8}deg) translateY(-8px)`;
             });
-            
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0deg)';
             });
