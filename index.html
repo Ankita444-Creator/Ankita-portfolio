@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Premium Soft Dark Gradient Theme Root */
+/* Premium Smoky Wavy Gradient Theme Root */
         :root {
-            --bg-primary: #0f1115; /* মেইন ব্যাকগ্রাউন্ড */
-            --bg-secondary: rgba(30, 34, 42, 0.45); /* গ্লাস কার্ডের ভেতরের কালার */
-            --text-main: #f1f5f9;  /* মেইন সাদা টেক্সট */
-            --text-muted: #94a3b8; /* সাবটাইটেল বা আবছা টেক্সট */
+            --bg-primary: #121620; /* Smoky Grayish Blue Base */
+            --bg-secondary: rgba(26, 32, 44, 0.45); /* Soft glass interior */
+            --text-main: #f8fafc;  
+            --text-muted: #94a3b8; 
             --accent: #0070f3;
             --accent-hover: #1e88e5;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
             --border-radius: 16px;
-            --card-border: 1px solid rgba(255, 255, 255, 0.08); /* গ্লাস বর্ডার */
+            --card-border: 1px solid rgba(255, 255, 255, 0.06); 
         }
 
         * {
@@ -28,8 +28,9 @@
             scroll-behavior: smooth;
         }
 
-       body {
-            background: linear-gradient(135deg, #0f1115 0%, #161920 50%, #0f1115 100%);
+        body {
+            /* স্ক্রিনশটের মতো Smoky Wavy Gradient ভাইব দেওয়ার জন্য */
+            background: radial-gradient(circle at 20% 30%, #1a2236 0%, #11141d 50%, #0d1017 100%);
             background-attachment: fixed;
             color: var(--text-main);
             overflow-x: hidden;
