@@ -7,34 +7,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-/* Premium Smoky Wavy Gradient Theme Root */
-        :root {
-            --bg-primary: #121620; /* Smoky Grayish Blue Base */
-            --bg-secondary: rgba(26, 32, 44, 0.45); /* Soft glass interior */
-            --text-main: #f8fafc;  
-            --text-muted: #94a3b8; 
-            --accent: #0070f3;
-            --accent-hover: #1e88e5;
-            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-            --border-radius: 16px;
-            --card-border: 1px solid rgba(255, 255, 255, 0.06); 
-        }
+/* ১. এই রুট ভ্যারিয়েবলটি আপডেট কর (Theme Colors) */
+:root {
+    --bg-primary: #0b0f19; /* আরও একটু ডার্ক বেস */
+    --bg-secondary: rgba(22, 29, 49, 0.4); /* প্রিমিয়াম গ্লাস মরফিজম */
+    --text-main: #f8fafc;  
+    --text-muted: #94a3b8; 
+    --accent: #3b82f6; /* ভাইব্রেন্ট ব্লু */
+    --accent-hover: #60a5fa;
+    --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5);
+    --border-radius: 16px;
+    --card-border: 1px solid rgba(255, 255, 255, 0.05); 
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            scroll-behavior: smooth;
-        }
+/* ২. বডির এই ব্যাকগ্রাউন্ডটা রিপ্লেস কর (Smoky Wavy Mesh Gradient) */
+body {
+    background-color: var(--bg-primary);
+    /* মাল্টিপল রেডিয়াল গ্রাডিয়েন্ট দিয়ে ব্লু, অরেঞ্জ, ইয়েলো স্মোকি ইফেক্ট তৈরি */
+    background-image: 
+        radial-gradient(circle at 80% 90%, rgba(249, 115, 22, 0.15) 0%, transparent 40%),  /* Orange Glow (Bottom Right) */
+        radial-gradient(circle at 20% 80%, rgba(234, 179, 8, 0.12) 0%, transparent 45%),   /* Yellow Glow (Bottom Left) */
+        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),  /* Core Blue Smoky Waves */
+        radial-gradient(circle at 10% 20%, rgba(30, 41, 59, 0.8) 0%, #070a12 100%);        /* Dark Base Overlay */
+    background-attachment: fixed;
+    color: var(--text-main);
+    overflow-x: hidden;
+    position: relative;
+}
 
-        body {
-            /* স্ক্রিনশটের মতো Smoky Wavy Gradient ভাইব দেওয়ার জন্য */
-            background: radial-gradient(circle at 20% 30%, #1a2236 0%, #11141d 50%, #0d1017 100%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
+/* ৩. গ্লাস মরফিজম কার্ডগুলোর ব্যাকগ্রাউন্ড আরও সুন্দর করার জন্য (Optional but Recommended) */
+.timeline-container .content, .skill-card, .project-container, .extra-container, .contact-card {
+    background: rgba(18, 24, 38, 0.5) !important;
+    backdrop-filter: blur(16px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+        /* ব্যাকগ্রাউন্ড স্মোকি গ্লো-এর জন্য স্পেশাল CSS */
+.smoky-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: -1; /* যাতে কন্টেন্টের পেছনে থাকে */
+    opacity: 0.45;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+.glow-blue {
+    top: 30%;
+    left: 10%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #0070f3 0%, transparent 70%);
+}
+.glow-orange {
+    bottom: 5%;
+    right: 5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #ff7a00 0%, transparent 70%);
+}
+.glow-yellow {
+    bottom: 15%;
+    left: -5%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #ffc700 0%, transparent 70%);
+}
 
         /* Navbar with Dark Glassmorphism */
         .navbar {
@@ -530,6 +568,9 @@
     </style>
 </head>
 <body>
+    <div class="smoky-glow glow-blue"></div>
+<div class="smoky-glow glow-orange"></div>
+<div class="smoky-glow glow-yellow"></div>
 
     <nav class="navbar">
         <div class="logo">Ankita Nandi</div>
