@@ -3,28 +3,780 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starting Fresh</title>
+    <title>Ankita Nandi | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        :root {
+            --bg-primary: #05070f; 
+            --bg-secondary: rgba(13, 20, 38, 0.45); 
+            --text-main: #f8fafc;  
+            --text-muted: #94a3b8; 
+            --accent: #3b82f6; 
+            --accent-hover: #60a5fa;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            --border-radius: 16px;
+            --card-border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+
         body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ==================== CUSTOM CURSOR ==================== */
+        .cursor-glow {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0) 70%);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: screen;
+            display: none; /* Shown via JS upon interaction */
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* Premium Fixed Cinematic Canvas Layout */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: #020203;
+        }
+
+        .bg-canvas::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .fluid-aurora-system {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            filter: blur(140px);
+            -webkit-filter: blur(140px);
+            opacity: 0.55;
+        }
+
+        .plasma-blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+
+        .blob-cyan {
+            bottom: -10%; left: 10%; width: 65vw; height: 50vh;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, rgba(59, 130, 246, 0.15) 50%, transparent 100%);
+            animation: organicDrift-1 32s infinite alternate ease-in-out;
+        }
+        .blob-purple {
+            bottom: -5%; right: 5%; width: 60vw; height: 60vh;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.35) 0%, rgba(79, 70, 229, 0.1) 60%, transparent 100%);
+            animation: organicDrift-2 28s infinite alternate ease-in-out;
+        }
+        .blob-warmth {
+            bottom: -20%; left: 45%; width: 50vw; height: 45vh;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, rgba(220, 38, 38, 0.08) 40%, transparent 100%);
+            animation: organicDrift-3 24s infinite alternate ease-in-out;
+        }
+
+        @keyframes organicDrift-1 {
+            0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate3d(5vw, -3vh, 0) scale(1.1) rotate(60deg); }
+            100% { transform: translate3d(-3vw, 4vh, 0) scale(0.95) rotate(120deg); }
+        }
+        @keyframes organicDrift-2 {
+            0% { transform: translate3d(0, 0, 0) scale(0.95) rotate(0deg); }
+            50% { transform: translate3d(-5vw, 4vh, 0) scale(1.05) rotate(-90deg); }
+            100% { transform: translate3d(2vw, -2vh, 0) scale(1) rotate(45deg); }
+        }
+        @keyframes organicDrift-3 {
+            0% { transform: translate3d(0, 0, 0) scale(1.05) rotate(0deg); }
+            50% { transform: translate3d(3vw, -5vh, 0) scale(0.9) rotate(140deg); }
+            100% { transform: translate3d(-4vw, -1vh, 0) scale(1) rotate(-60deg); }
+        }
+
+        /* High Precision Glassmorphic Containers */
+        .timeline-container .content, .skill-card, .project-container, .extra-container, .contact-card {
+            background: rgba(10, 15, 30, 0.55) !important;
+            backdrop-filter: blur(20px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.09) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(5, 7, 15, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            border-bottom: var(--card-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Full-Width Layout Architecture */
+        .section {
+            padding: 80px 5% 40px 5%; /* Fluid edge-to-edge padding */
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero & Typewriter */
+        .hero {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding-top: 120px;
+            min-height: 85vh; /* Shorter initial height */
+        }
+
+        .hero-content { flex: 1; }
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin: 0;
+        }
+        .highlight {
+            color: var(--accent);
+            background: linear-gradient(to right, #3b82f6, #06b6d4, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            height: 35px; /* Fixed height to stop layout jumping */
+        }
+        .typewriter-text {
+            color: var(--text-main);
+            margin-left: 8px;
+        }
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: var(--accent);
+            margin-left: 2px;
+            animation: blink 0.75s step-end infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .hero-image-container {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
         }
-        h1 {
-            font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+
+        .geometric-shape {
+            width: 320px;
+            height: 320px;
+            background: #1d4ed8;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            animation: morphing 8s ease-in-out infinite alternate;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        .profile-pic { width: 100%; height: 100%; object-fit: cover; }
+
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            100% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
+        }
+
+        /* Timeline Educational Layout */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: rgba(59, 130, 246, 0.2);
+            top: 0; bottom: 0; left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            right: -8px; top: 24px;
+            background-color: #05070f;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .left { left: 0; }
+        .right { left: 50%; }
+        .right::after { left: -8px; }
+
+        .timeline-container .content {
+            padding: 25px; /* Compact */
+            border-radius: var(--border-radius);
+            transition: transform 0.3s ease;
+        }
+        .timeline-container .content:hover { transform: translateY(-5px); }
+        .date {
+            font-weight: 700; color: var(--accent);
+            display: block; margin-bottom: 8px;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* Skills Component (Professional & Short) */
+        .skills-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Tighter gap */
+            flex-wrap: wrap;
+        }
+        .skill-card {
+            padding: 30px 20px; /* Reduced padding */
+            border-radius: var(--border-radius);
+            width: 260px; /* Compact width */
+            text-align: center;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .skill-icon { font-size: 3.5rem; margin-bottom: 15px; } /* Slightly smaller icons */
+        .python-color { color: #3776AB; filter: drop-shadow(0 0 8px rgba(55,118,171,0.4)); }
+        .c-color { color: #00599C; filter: drop-shadow(0 0 8px rgba(0,89,156,0.4)); }
+        .canva-color { color: #00C4CC; filter: drop-shadow(0 0 8px rgba(0,196,204,0.4)); }
+
+        /* Showcase Portals (Projects & Extras) - Compact Form */
+        .project-container, .extra-container {
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        .project-container:hover, .extra-container:hover { transform: translateY(-5px); }
+        .extra-container { flex-direction: row-reverse; }
+
+        .project-info, .extra-info {
+            padding: 40px; /* Shorter padding */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 10px 0 15px 0; /* Tighter margins */
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .project-info p, .extra-info p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1rem; /* slightly smaller for compactness */
+        }
+
+        .project-video-wrapper, .extra-image-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: #020408;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px; /* Shorter height to save scroll space */
+        }
+        .cropped-game-video, .proof-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .extra-container:hover .proof-img { transform: scale(1.05); }
+
+        .views-badge {
+            position: absolute;
+            bottom: 20px; left: 20px;
+            background: #ff0050; color: white;
+            padding: 8px 16px; border-radius: 30px;
+            font-weight: 700; font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(255, 0, 80, 0.5);
+            display: flex; align-items: center; gap: 8px; z-index: 2;
+        }
+
+        .instagram-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white; text-decoration: none; font-weight: 600;
+            border-radius: 30px; transition: all 0.3s ease;
+        }
+
+        /* Communications Hub (Compact Grid) */
+        .contact-card {
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            box-sizing: border-box;
+        }
+        .contact-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+        .contact-item:hover { background: rgba(255, 255, 255, 0.04); }
+        .contact-item i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
+        .contact-text p { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 5px 0; font-weight: 600; text-transform: uppercase; }
+        .contact-text span { color: var(--text-main); font-weight: 700; font-size: 0.95rem; word-break: break-word; }
+
+        .footer {
+            background: #03050a; color: #ffffff;
+            text-align: center; padding: 30px 20px; margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer p { font-size: 0.9rem; opacity: 0.6; margin: 6px 0; }
+
+        /* ==================== FLUID ADAPTATION SYSTEMS ==================== */
+        @media (max-width: 900px) {
+            .hero, .project-container, .extra-container {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            .project-info, .extra-info {
+                align-items: center;
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0 20px; }
+            .nav-links { display: none; }
+            
+            .section { padding: 70px 5% 30px 5%; } /* True Edge-to-Edge Fluidity */
+            
+            .hero { padding-top: 100px; flex-direction: column-reverse !important; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .subtitle { justify-content: center; flex-wrap: wrap; height: auto; }
+            .description { margin: 0 auto 30px auto; }
+            .geometric-shape { width: 260px; height: 260px; margin-bottom: 20px; }
+            
+            .fluid-aurora-system { filter: blur(90px) !important; -webkit-filter: blur(90px) !important; opacity: 0.4; }
+            .blob-warmth { display: none !important; }
+
+            /* Fix Flowchart Width */
+            .timeline {
+                display: flex; flex-direction: column; gap: 20px;
+                max-width: 100%; margin: 0; position: relative;
+            }
+            .timeline::after {
+                left: 20px !important;
+                background: linear-gradient(to bottom, var(--accent), #10b981);
+            }
+            .timeline-container {
+                width: 100% !important;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+            }
+            .left, .right { left: 0 !important; }
+            .timeline-container::after { left: 11px !important; top: 24px !important; }
         }
     </style>
 </head>
 <body>
+    <div class="cursor-glow" id="cursorGlow"></div>
 
-    <h1>Start from the beginning</h1>
+    <div class="bg-canvas">
+        <div class="fluid-aurora-system">
+            <div class="plasma-blob blob-cyan"></div>
+            <div class="plasma-blob blob-purple"></div>
+            <div class="plasma-blob blob-warmth"></div>
+        </div>
+    </div>
 
+    <nav class="navbar">
+        <div class="logo">Ankita Nandi</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#extra">Extra-Curricular</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="about" class="hero section reveal">
+        <div class="hero-content">
+            <h1>Hi, I am <br><span class="highlight">Ankita Nandi</span></h1>
+            <p class="subtitle">I am a <span class="typewriter-text"></span><span class="cursor"></span></p>
+            <p class="description">Obsessed with structural logic, clean execution, and solving complex logical problems.</p>
+            <a href="#projects" class="btn">Explore My Work</a>
+        </div>
+        <div class="hero-image-container">
+            <div class="geometric-shape">
+                <img src="ankitaprofile.jpg" alt="Ankita Nandi" class="profile-pic" onerror="this.style.opacity='0'; this.parentElement.style.background='url(https://images.unsplash.com/photo-1517694712202-14dd9538aa97) center/cover'">
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="education section reveal">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+            <div class="timeline-container left">
+                <div class="content">
+                    <span class="date">2018 - 2024</span>
+                    <h3 style="margin: 0 0 5px 0;">Secondary Education</h3>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">Class V to X</p>
+                </div>
+            </div>
+            <div class="timeline-container right">
+                <div class="content">
+                    <span class="date">2024 - 2026</span>
+                    <h3 style="margin: 0 0 5px 0;">Higher Secondary</h3>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">WBCHSE | Computer Science</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills section reveal">
+        <h2 class="section-title">Skills & Tools</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-python skill-icon python-color"></i>
+                <h3 style="margin: 0;">Languages</h3>
+                <p style="color: var(--text-main); font-weight: 600; margin: 10px 0 0 0; font-size: 0.9rem;">Python, C</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-palette skill-icon canva-color"></i>
+                <h3 style="margin: 0;">Design</h3>
+                <p style="color: var(--text-main); font-weight: 600; margin: 10px 0 5px 0; font-size: 0.9rem;">Canva</p>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">(Asset Editing)</span>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-cloud-upload-alt skill-icon c-color" style="color: #3b82f6;"></i>
+                <h3 style="margin: 0;">Deployment</h3>
+                <p style="color: var(--text-main); font-weight: 600; margin: 10px 0 0 0; font-size: 0.9rem;">Replit, Vercel</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects section reveal">
+        <h2 class="section-title">Projects</h2>
+        <div class="project-container">
+            <div class="project-info">
+                <h3 style="margin: 0;"><a href="https://v0-voting-ceremony-2d-game.vercel.app" target="_blank" style="color: inherit; text-decoration: none;">Voting Ceremony <i class="fas fa-external-link-alt" style="font-size: 0.9rem; color: var(--accent);"></i></a></h3>
+                <span class="badge">Interactive 2D Game</span>
+                
+                <p>Developed an interactive 2D game centered around a unique voting theme. Gameplay involves navigating a character to collect political party symbols within a dynamic environment.</p>
+                
+                <p style="margin-bottom: 5px;"><strong style="color: var(--text-main);">Tech:</strong> <span style="color: var(--accent-hover);">JavaScript, HTML5, CSS3</span></p>
+                <p style="margin-bottom: 25px;"><strong style="color: var(--text-main);">Live:</strong> Hosted on <a href="https://v0-voting-ceremony-2d-game.vercel.app" target="_blank" style="color: var(--accent); text-decoration: underline;">Vercel</a>.</p>
+                
+                <a href="https://v0-voting-ceremony-2d-game.vercel.app" target="_blank" class="btn">Play Live Game</a>
+            </div>
+            <a href="https://v0-voting-ceremony-2d-game.vercel.app" target="_blank" class="project-video-wrapper">
+                <video class="cropped-game-video" autoplay loop muted playsinline>
+                    <source src="1000331411.mp4" type="video/mp4">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f" alt="Game Preview" style="width:100%; height:100%; object-fit:cover;">
+                </video>
+            </a>
+        </div>
+    </section>
+
+    <section id="extra" class="extra-curricular section reveal">
+        <h2 class="section-title">Extra-Curricular</h2>
+        <div class="extra-container">
+            <div class="extra-info">
+                <h3 style="margin: 0 0 10px 0;">Content Creation & Music</h3>
+                <p>Actively producing high-engagement singing Reels for Instagram and YouTube Shorts, optimizing digital outreach through strategic execution.</p>
+                <a href="https://www.instagram.com/ankita.nandi_?igsh=MWRwYmU4MHphbjNybQ==" target="_blank" class="instagram-btn">
+                    <i class="fab fa-instagram"></i> View Profile
+                </a>
+            </div>
+            <div class="extra-image-wrapper">
+                <img src="rabindra-jayanti.jpg" alt="Rabindra Jayanti Performance" class="proof-img" onerror="this.style.opacity='0'">
+                <div class="views-badge"><i class="fas fa-fire"></i> 39K Views</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact section reveal">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+            <a href="mailto:nandiankita34@gmail.com" class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div class="contact-text">
+                    <p>Email</p>
+                    <span>nandiankita34@gmail.com</span>
+                </div>
+            </a>
+            <a href="tel:+919749769885" class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <div class="contact-text">
+                    <p>Phone</p>
+                    <span>+91 9749769885</span>
+                </div>
+            </a>
+            <a href="#" target="_blank" class="contact-item">
+                <i class="fab fa-linkedin-in"></i>
+                <div class="contact-text">
+                    <p>LinkedIn</p>
+                    <span>Connect</span>
+                </div>
+            </a>
+            <a href="#" target="_blank" class="contact-item">
+                <i class="fab fa-github"></i>
+                <div class="contact-text">
+                    <p>GitHub</p>
+                    <span>View Projects</span>
+                </div>
+            </a>
+        </div>
+    </section> 
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Ankita Nandi. All Rights Reserved.</p>
+            <p>Designed for High Performance & Mobile Responsiveness.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Smooth Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const checkReveal = () => {
+            const triggerBottom = window.innerHeight * 0.90;
+            revealElements.forEach(el => {
+                const elTop = el.getBoundingClientRect().top;
+                if (elTop < triggerBottom) el.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal); 
+
+        // 2. 3D Card Hover Engine
+        const cards = document.querySelectorAll('.skill-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width / 2);
+                const y = e.clientY - rect.top - (rect.height / 2);
+                card.style.transform = `rotateY(${x / 8}deg) rotateX(${-y / 8}deg) translateY(-8px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0deg)';
+            });
+        });
+
+        // 3. Typewriter Effect
+        const words = ["Computer Science Student", "Tech Enthusiast", "Singer"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeElement = document.querySelector('.typewriter-text');
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typeElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 1500; // Pause at the end of the word
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 400; // Pause before typing next word
+            }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        if(typeElement) typeEffect();
+
+        // 4. Fluid Cursor / Touch Tracker System
+        const cursor = document.getElementById('cursorGlow');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let cursorX = window.innerWidth / 2;
+        let cursorY = window.innerHeight / 2;
+
+        // Uses requestAnimationFrame for smooth interpolating physics
+        function animateCursor() {
+            let distX = mouseX - cursorX;
+            let distY = mouseY - cursorY;
+            cursorX += distX * 0.15; // The smaller the number, the smoother the trailing
+            cursorY += distY * 0.15;
+            
+            if(cursor) {
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+            }
+            requestAnimationFrame(animateCursor);
+        }
+
+        const updateCoordinates = (e) => {
+            if(cursor.style.display !== 'block') cursor.style.display = 'block';
+            if (e.touches && e.touches.length > 0) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+            } else {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            }
+        };
+
+        window.addEventListener('mousemove', updateCoordinates);
+        window.addEventListener('touchmove', updateCoordinates, {passive: true});
+        window.addEventListener('touchstart', updateCoordinates, {passive: true});
+        animateCursor();
+    </script>
 </body>
 </html>
