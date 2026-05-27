@@ -521,6 +521,76 @@
             .left, .right { left: 0 !important; }
             .timeline-container::after { left: 11px !important; top: 24px !important; }
         }
+
+        /* ==================== REEL & FLOATING REACTIONS ==================== */
+        .reel-container {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        #floating-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass through to video */
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .floating-comment {
+            position: absolute;
+            bottom: 40px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 85%;
+            opacity: 0;
+            animation: floatUpComment 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .floating-comment strong {
+            color: var(--accent-hover);
+            font-size: 0.8rem;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #ff0050;
+            opacity: 0;
+            filter: drop-shadow(0 2px 4px rgba(255,0,80,0.4));
+            animation: floatUpHeart 3s ease-in forwards;
+        }
+
+        @keyframes floatUpComment {
+            0% { transform: translateY(30px); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(-80px); opacity: 1; }
+            100% { transform: translateY(-120px); opacity: 0; }
+        }
+
+        @keyframes floatUpHeart {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            15% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-200px) scale(1) rotate(15deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -635,9 +705,16 @@
                     <i class="fab fa-instagram"></i> View Profile
                 </a>
             </div>
-            <div class="extra-image-wrapper">
-                <img src="rabindra-jayanti.jpg" alt="Rabindra Jayanti Performance" class="proof-img" onerror="this.style.opacity='0'">
-                <div class="views-badge"><i class="fas fa-fire"></i> 39K Views</div>
+            
+            <div class="extra-image-wrapper reel-container" id="reelContainer">
+                <video class="cropped-game-video" autoplay loop muted playsinline>
+                    <source src="rabindra_reel.mp4" type="video/mp4">
+                    <img src="rabindra-jayanti.jpg" alt="Rabindra Jayanti Performance" class="proof-img" style="width:100%; height:100%; object-fit:cover;">
+                </video>
+                
+                <div id="floating-layer"></div>
+
+                <div class="views-badge" style="z-index: 10;"><i class="fas fa-fire"></i> 39K Views</div>
             </div>
         </div>
     </section>
@@ -777,6 +854,58 @@
         window.addEventListener('touchmove', updateCoordinates, {passive: true});
         window.addEventListener('touchstart', updateCoordinates, {passive: true});
         animateCursor();
+
+        // 5. Dynamic Reel Comments & Hearts Engine
+        const commentsData = [
+            { user: "prience_711", text: "Voice 💫💫✨" },
+            { user: "ronisk1073", text: "Kiya song Just wow 👏👏" },
+            { user: "chal_beta_selfi...", text: "Part 2 button 🔘" },
+            { user: "drfaisalabedin", text: "Aro besi Rabindra Sangeet post koro..." },
+            { user: "brave_fighter_debjit", text: "What A Voice 💯🙏" },
+            { user: "bittusk333", text: "Nice voice sister 👏" }
+        ];
+
+        const floatingLayer = document.getElementById('floating-layer');
+
+        function spawnHeart() {
+            if (!floatingLayer) return;
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤️';
+            // Randomize horizontal starting position slightly
+            heart.style.right = `${10 + Math.random() * 30}px`; 
+            floatingLayer.appendChild(heart);
+
+            // Remove element after animation finishes
+            setTimeout(() => { heart.remove(); }, 3000);
+        }
+
+        function spawnComment() {
+            if (!floatingLayer) return;
+            const randomComment = commentsData[Math.floor(Math.random() * commentsData.length)];
+            
+            const commentBubble = document.createElement('div');
+            commentBubble.className = 'floating-comment';
+            commentBubble.innerHTML = `<strong>${randomComment.user}</strong> <span>${randomComment.text}</span>`;
+            
+            floatingLayer.appendChild(commentBubble);
+
+            // Remove element after animation finishes
+            setTimeout(() => { commentBubble.remove(); }, 4000);
+        }
+
+        // Run the simulation only if the container exists
+        if(floatingLayer) {
+            // Spawn hearts frequently
+            setInterval(spawnHeart, 1200);
+            
+            // Spawn comments occasionally
+            setInterval(spawnComment, 2500);
+            
+            // Initial spawn
+            setTimeout(spawnComment, 1000);
+            setTimeout(spawnHeart, 500);
+        }
     </script>
 </body>
 </html>
